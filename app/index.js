@@ -63,12 +63,12 @@ bot.use(async (ctx, next) => {
 // Basic handlers
 const handleStart = async (ctx) => {
   try {
-    const welcomeMessage = t(ctx, 'start.welcome', { 
-      firstName: ctx.from.first_name || ctx.from.username || 'User' 
+    const welcomeMessage = t(ctx, 'start.welcome', {
+      firstName: ctx.from.first_name || ctx.from.username || 'User'
     });
-    
+
     await ctx.reply(welcomeMessage);
-    
+
     logAction('user_started_bot', {
       userId: ctx.from.id,
       username: ctx.from.username,
@@ -85,7 +85,7 @@ const handleHelp = async (ctx) => {
   try {
     const helpMessage = t(ctx, 'help.message');
     await ctx.reply(helpMessage);
-    
+
     logAction('user_requested_help', {
       userId: ctx.from.id,
       username: ctx.from.username
