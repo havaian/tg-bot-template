@@ -1,6 +1,4 @@
 const { getOrCreateUser, isGroupChat } = require('./common');
-const { t } = require('../utils/i18nHelper');
-const { logAction } = require('../logger');
 
 /**
  * Handle /language command - show language selection
@@ -20,12 +18,12 @@ const handleLanguageSelection = async (ctx) => {
         ];
 
         await ctx.reply(
-            t(ctx, 'language.select'),
+            global.i18n.t(ctx, 'language.select'),
             { reply_markup: { inline_keyboard: keyboard } }
         );
     } catch (error) {
         console.error('Error handling language selection:', error);
-        await ctx.reply(t(ctx, 'errors.general'));
+        await ctx.reply(global.i18n.t(ctx, 'errors.general'));
     }
 };
 
@@ -48,26 +46,26 @@ const handleLanguageChange = async (ctx) => {
 
         await ctx.answerCbQuery();
         await ctx.editMessageText(
-            t(ctx, 'language.changed'),
+            global.i18n.t(ctx, 'language.changed'),
             { reply_markup: { inline_keyboard: [] } }
         );
 
         // Send updated keyboard based on user role (only in private chat)
         if (!isGroupChat(ctx)) {
             if (isStudent(user)) {
-                await ctx.reply(t(ctx, 'lists.select_action'), getStudentMenuKeyboard(ctx));
+                await ctx.reply(global.i18n.t(ctx, 'lists.select_action'), getStudentMenuKeyboard(ctx));
             } else {
-                await ctx.reply(t(ctx, 'lists.select_action'), getMainMenuKeyboard(ctx));
+                await ctx.reply(global.i18n.t(ctx, 'lists.select_action'), getMainMenuKeyboard(ctx));
             }
         }
 
-        logAction('user_changed_language', {
+        global.logger.logAction('user_changed_language', {
             userId: user._id,
             newLanguage: locale
         });
     } catch (error) {
         console.error('Error handling language change:', error);
-        await ctx.answerCbQuery(t(ctx, 'errors.general'));
+        await ctx.answerCbQuery(global.i18n.t(ctx, 'errors.general'));
     }
 };
 

@@ -5,4 +5,9 @@ const t = (ctx, key, interpolations = {}) => {
     return i18n.t(key, locale, interpolations);
 };
 
+// Make logger functions available globally
+global.i18n = {
+  t
+};
+
 module.exports = { t };
