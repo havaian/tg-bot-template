@@ -6,8 +6,6 @@ const t = (ctx, key, interpolations = {}) => {
 };
 
 // Make logger functions available globally
-global.i18n = {
-  t
-};
+global.i18n = { t };
 
 module.exports = { t };
